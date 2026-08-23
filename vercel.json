@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/", "destination": "/emptyfull", "permanent": false }
+  ],
   "rewrites": [
     { "source": "/emptyfull/(.*)", "destination": "/index.html" },
     { "source": "/emptyfull", "destination": "/index.html" }
