@@ -3,6 +3,7 @@
     { "source": "/", "destination": "/emptyfull", "permanent": false }
   ],
   "rewrites": [
+    { "source": "/emptyfull/assets/(.*)", "destination": "/assets/$1" },
     { "source": "/emptyfull/(.*)", "destination": "/index.html" },
     { "source": "/emptyfull", "destination": "/index.html" }
   ]
