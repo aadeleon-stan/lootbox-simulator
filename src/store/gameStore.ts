@@ -7,6 +7,7 @@ interface GameState {
   gems: number;
   energy: number;
   inventory: InventoryEntry[];
+  lastLoginDate: string;
   // Actions
   setUsername: (name: string) => void;
   addGems: (amount: number) => void;
@@ -15,6 +16,7 @@ interface GameState {
   spendEnergy: (amount: number) => boolean;
   addBox: (boxId: string, count?: number) => void;
   removeBox: (boxId: string) => boolean;
+  claimDailyBonus: () => boolean;
   reset: () => void;
 }
 
@@ -23,6 +25,7 @@ const INITIAL_STATE = {
   gems: 0,
   energy: 0,
   inventory: [] as InventoryEntry[],
+  lastLoginDate: '',
 };
 
 export const useGameStore = create<GameState>()(
@@ -71,6 +74,21 @@ export const useGameStore = create<GameState>()(
             .map((e) => (e.boxId === boxId ? { ...e, count: e.count - 1 } : e))
             .filter((e) => e.count > 0),
         }));
+        return true;
+      },
+
+      claimDailyBonus: () => {
+        const today = new Date().toISOString().slice(0, 10);
+        if (get().lastLoginDate === today) return false;
+        set((s) => {
+          const existing = s.inventory.find((e) => e.boxId === 'bronze');
+          return {
+            lastLoginDate: today,
+            inventory: existing
+              ? s.inventory.map((e) => e.boxId === 'bronze' ? { ...e, count: e.count + 1 } : e)
+              : [...s.inventory, { boxId: 'bronze', count: 1 }],
+          };
+        });
         return true;
       },
 

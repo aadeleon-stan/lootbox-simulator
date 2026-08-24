@@ -5,14 +5,12 @@ import { useGameStore } from '../store/gameStore';
 export default function Login() {
   const [name, setName] = useState('');
   const setUsername = useGameStore((s) => s.setUsername);
-  const addBox = useGameStore((s) => s.addBox);
   const navigate = useNavigate();
 
   function handleLogin() {
     const trimmed = name.trim();
     if (!trimmed) return;
     setUsername(trimmed);
-    addBox('bronze'); // daily login bonus box
     navigate('/main-menu');
   }
 
