@@ -5,9 +5,10 @@ interface ModalProps {
   onClose?: () => void;
   title?: string;
   children: ReactNode;
+  className?: string;
 }
 
-export default function Modal({ open, onClose, title, children }: ModalProps) {
+export default function Modal({ open, onClose, title, children, className }: ModalProps) {
   if (!open) return null;
 
   return (
@@ -16,7 +17,7 @@ export default function Modal({ open, onClose, title, children }: ModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6 mx-4 w-full max-w-sm"
+        className={`bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6 mx-4 w-full max-w-sm ${className ?? ''}`}
         onClick={(e) => e.stopPropagation()}
       >
         {title && <h3 className="text-xl font-bold mb-3">{title}</h3>}
