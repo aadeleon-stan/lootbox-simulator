@@ -11,7 +11,7 @@ import Compendium from './screens/Compendium';
 
 export default function App() {
   return (
-    <BrowserRouter basename="/projects/emptyfull">
+    <BrowserRouter basename="/projects/emptyfull/app">
       <HUD />
       <div className="pt-[52px]">
       <Routes>

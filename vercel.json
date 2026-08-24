@@ -1,7 +1,7 @@
 {
   "rewrites": [
-    { "source": "/projects/emptyfull/assets/(.*)", "destination": "/assets/$1" },
-    { "source": "/projects/emptyfull/(.*)", "destination": "/index.html" },
-    { "source": "/projects/emptyfull", "destination": "/index.html" }
+    { "source": "/projects/emptyfull/app/assets/(.*)", "destination": "/assets/$1" },
+    { "source": "/projects/emptyfull/app/(.*)", "destination": "/index.html" },
+    { "source": "/projects/emptyfull/app", "destination": "/index.html" }
   ]
 }
