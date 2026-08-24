@@ -6,9 +6,9 @@ Rarity tiers: Common | Uncommon | Rare | Epic | Legendary
 
 ---
 
-## [Item Name Here]
+## Green Apple
 
-- **Name:**
+- **Name:** Green Apple
 - **Image:** /images/items/.png
 - **Rarity:** Common
 - **Effect:** (none)
@@ -16,9 +16,9 @@ Rarity tiers: Common | Uncommon | Rare | Epic | Legendary
 
 ---
 
-## [Item Name Here]
+## Leather Boots
 
-- **Name:**
+- **Name:** Leather Boots
 - **Image:** /images/items/.png
 - **Rarity:** Uncommon
 - **Effect:**
@@ -26,9 +26,9 @@ Rarity tiers: Common | Uncommon | Rare | Epic | Legendary
 
 ---
 
-## [Item Name Here]
+## Banner of Courage
 
-- **Name:**
+- **Name:** Banner of Courage
 - **Image:** /images/items/.png
 - **Rarity:** Rare
 - **Effect:**
@@ -36,9 +36,9 @@ Rarity tiers: Common | Uncommon | Rare | Epic | Legendary
 
 ---
 
-## [Item Name Here]
+## Horn of Windsong
 
-- **Name:**
+- **Name:** Horn of Windsong
 - **Image:** /images/items/.png
 - **Rarity:** Epic
 - **Effect:**
@@ -46,9 +46,9 @@ Rarity tiers: Common | Uncommon | Rare | Epic | Legendary
 
 ---
 
-## [Item Name Here]
+## Knife
 
-- **Name:**
+- **Name:** Knife
 - **Image:** /images/items/.png
 - **Rarity:** Legendary
 - **Effect:**

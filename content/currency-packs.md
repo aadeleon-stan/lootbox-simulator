@@ -4,18 +4,18 @@ Each pack needs: name, currency type, amount, and USD price.
 
 ---
 
-## Starter Gems
+## Gem Pot
 
-- **Name:** Starter Gems
+- **Name:** Gem Pot
 - **Currency:** Gems
 - **Amount:** 100
 - **Price (USD):** $1.00
 
 ---
 
-## Gem Bundle
+## Gem Cache
 
-- **Name:** Gem Bundle
+- **Name:** Gem Cache
 - **Currency:** Gems
 - **Amount:** 1,000
 - **Price (USD):** $7.49
@@ -31,9 +31,9 @@ Each pack needs: name, currency type, amount, and USD price.
 
 ---
 
-## Energy Reserve
+## Energy Pack
 
-- **Name:** Energy Reserve
+- **Name:** Energy Pack
 - **Currency:** Energy
 - **Amount:** 1,000
 - **Price (USD):** $19.99

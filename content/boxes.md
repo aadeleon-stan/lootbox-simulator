@@ -8,7 +8,7 @@ Each box needs: name, image path, rarity distribution (must sum to 100%), and pr
 
 - **Name:** Bronze Box
 - **Image:** /images/boxes/bronze.png
-- **Price:** 100 gems
+- **Price:** 150 gems
 - **Rarity distribution:**
   - Common (grey): 70%
   - Uncommon (green): 20%
@@ -22,7 +22,7 @@ Each box needs: name, image path, rarity distribution (must sum to 100%), and pr
 
 - **Name:** Silver Box
 - **Image:** /images/boxes/silver.png
-- **Price:** 500 gems
+- **Price:** 350 gems
 - **Rarity distribution:**
   - Common (grey): 50%
   - Uncommon (green): 30%
@@ -36,7 +36,7 @@ Each box needs: name, image path, rarity distribution (must sum to 100%), and pr
 
 - **Name:** Gold Box
 - **Image:** /images/boxes/gold.png
-- **Price:** 1000 gems
+- **Price:** 800 gems
 - **Rarity distribution:**
   - Common (grey): 30%
   - Uncommon (green): 30%
@@ -50,7 +50,7 @@ Each box needs: name, image path, rarity distribution (must sum to 100%), and pr
 
 - **Name:** Prestige Box
 - **Image:** /images/boxes/prestige.png
-- **Price:** 200 energy
+- **Price:** 300 energy
 - **Rarity distribution:**
   - Common (grey): 0%
   - Uncommon (green): 20%
