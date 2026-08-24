@@ -1,0 +1,84 @@
+# Overview
+Let's create an app for web and mobile in the spirit of the Korean "dopamine site" trend (canonical example: "Only the Food Doesn't Come").
+
+My vision is to replicate the experience of the microtransaction lootbox/gacha minigame in many popular video games from the last few years, but with no real money involved. Working title is EmptyFull.
+
+## Guiding principles
+Key points I'm thinking about:
+1. There must be no real money leaving the user's pocket.
+2. There must be no real consequences, even benefits. The experience of the transaction is the entire gameplay loop. Any satisfaction should be assigned by the user themselves -- this makes it impossible to mistake the fact that the "rewards" are not the thing driving the behavior/addiction.
+3. The app must be mobile-friendly, though we will build and test on web first.
+4. The app should lend itself to virality, but network effects are not needed, i.e., this can be an entirely single-player experience.
+5. The goal is to be FUN, not necessarily addictive.
+
+# Content
+## Currencies
+For MVP, we will have just two currencies: Gems and Energy. Gems are received by opening boxes or direct purchase, and can be spent on Bronze, Silver, and Gold boxes. Energy can only be acquired by purchasing it directly, and can be spent on Platinum boxes.
+
+## Currency packs
+For MVP, we'll start with just four currency packs available for direct purchase: 100 gems ($1.00), 1000 gems ($7.49), 200 energy ($4.99), and 1000 energy ($19.99). To help keep track of currency packs, let's generate a text content file with currency pack templates that I can fill in as we do initial implementation.
+
+## Box types
+For MVP, we'll start with just four different tiers of box: Bronze, Silver, Gold, and Prestige. Each box needs a name, image, rarity distribution, and price. To help keep track of boxes, let's generate a text content file with box templates that I can fill in as we do initial implementation.
+
+## Items
+For MVP, we'll start with just a few basic items. Each item should have a name, image, rarity, effect (optional), and flavor text (optional). To help keep track of items, let's generate a text content file with item templates that I can fill in as we do initial implementation.
+
+# Approach
+
+## General notes
+- Transaction CTAs: for buttons that trigger a transaction, such as buying things or opening boxes, we will require the user to hold the CTA for a certain amount of time (say, five seconds) to verify that they intend to make the transaction. During this time, we will visually show the CTA making progress (e.g., by filling the button like a progress bar).
+
+## Proposed gameplay loop
+
+### Login/startup:
+1. User "logs in" to the app.
+2. User receives "news" as a modal: lootbox updates, new items or item rebalancing, currency conversion updates, etc.
+3. User receives their "free daily login bonus box" with a CTA to "Open now!" or "Maybe later." If they choose to open, we take them to the Loot Roll screen for a Bronze box. Otherwise, they continue to the main menu.
+
+### Main menu:
+Main menu has several options:
+A. Open boxes (N)
+Here, N is replaced by the total number of boxes in the user's inventory.
+
+B. Buy boxes
+C. Buy gems and energy
+D. View compendium
+E. Log out
+
+### Open boxes:
+This page is the user's inventory, which shows how many of each type of box they currently hold unopened. Selecting the icon for a box type that they hold will highlight that box and give a Transaction CTA to "Open [tier name] box" -- if successful, they are taken to the Loot Roll screen for that type of box.
+
+There is also a navigation to go back to main menu, as well as a CTA for "Buy boxes."
+
+### Buy boxes
+This page displays the user's currency balances and displays cards for each type of box to buy. The cards show the box image, the price, and how many the user already has. There are two buttons in the icon: "Details" and "Buy box (price)."
+
+Clicking details opens an info panel that describes the rarity distribution of the possible items in the box.
+
+The "Buy box (price)" button is a Transaction CTA: if successful and they have enough of the appropriate currency, it is subtracted from their balance and the box is added to their inventory. If they do not have enough currency, they get a modal that says "Uh-oh! Not enough (currency)!" with a CTA to "Buy (currency)" which would take the user to the "Buy gems and energy" screen.
+
+There is navigation to go back to main menu, as well as a CTA for "Open boxes."
+
+### Buy gems and energy
+This page allows the user to "pay" (in USD) to add in-game currency to their account. Each card shows a different currency pack; clicking a pack takes the user to the Payment screen for that pack.
+
+### Payment
+Disclaimer: we will NOT be taking any real payments. This screen exists to make it feel like the user is making a real transaction, but we will not take any legitimate payment info or attempt any payment processing.
+
+This screen will come preloaded with a "saved payment method" which is a "WISA" card ending in "1111" and expiring in April 2069. There will be a Transaction CTA for "Pay (amount)" which will show the USD amount of the transaction including tax; as well as an option to "Go back." Successfully completing the transaction will show a "Thank you for your purchase!" modal with an image of the purchase, and add the purchase to the user's balance.
+
+### Loot Roll
+This plays an animation that cycles through possible items in the box (like a carousel) before slowing down and stopping. When the roulette ends, there is some kind of fanfare made so that it feels exciting to have received whatever item was landed on. "Congrats! You received [item name]!"
+
+The user also receives 15 gems, which should be made clear to them. There is a CTA for "Open more boxes" which takes them back to the "Open boxes" screen.
+
+### View Compendium
+This screen shows cards for all the item previews (item name, image, and rarity), sorted in alphabetical order. Future work will add other sorting and filtering options. Clicking any card will display an expanded view that includes all the item info (future work: this info could include which boxes the item can be found in). There is also navigation to return to the main menu.
+
+## MVP scope and development
+The "Log out" button does nothing and will not be implemented for MVP.
+
+# Open questions
+1. Am I missing any steps in the process that would make the experience feel more real?
+2. Am I missing any opportunities for microrewards along the way, or for a more satisfying payoff?
