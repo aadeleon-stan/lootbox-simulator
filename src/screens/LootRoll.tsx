@@ -36,6 +36,7 @@ const revealSequence: string[] = [
 export default function LootRoll() {
   const { state } = useLocation();
   const addGems = useGameStore((s) => s.addGems);
+  const recordLoot = useGameStore((s) => s.recordLoot);
 
   const box = boxes.find((b) => b.id === state?.boxId);
   const rolledItem = useRef<Item>(box ? rollItem(box, items) : items[0]);
@@ -105,12 +106,13 @@ export default function LootRoll() {
     return () => clearInterval(interval);
   }, [phase]);
 
-  // Phase 3: result — add gems once
+  // Phase 3: result — add gems once, record loot
   useEffect(() => {
     if (phase !== 'result' || gemsAdded.current) return;
     gemsAdded.current = true;
     addGems(15);
-  }, [phase, addGems]);
+    recordLoot(rolledItem.current.rarity);
+  }, [phase, addGems, recordLoot]);
 
   if (!box) {
     return (

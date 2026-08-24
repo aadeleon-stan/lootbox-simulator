@@ -10,6 +10,7 @@ export default function Payment() {
   const navigate = useNavigate();
   const addGems = useGameStore((s) => s.addGems);
   const addEnergy = useGameStore((s) => s.addEnergy);
+  const recordSpend = useGameStore((s) => s.recordSpend);
 
   const pack = currencyPacks.find((p) => p.id === state?.packId);
 
@@ -34,6 +35,7 @@ export default function Payment() {
   const handlePay = () => {
     if (pack.currency === 'gems') addGems(pack.amount);
     else addEnergy(pack.amount);
+    recordSpend(total);
     setShowThankYou(true);
   };
 

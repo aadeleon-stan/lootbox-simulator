@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { InventoryEntry } from '../types';
+import type { InventoryEntry, Rarity } from '../types';
 
 interface GameState {
   username: string;
@@ -8,6 +8,8 @@ interface GameState {
   energy: number;
   inventory: InventoryEntry[];
   lastLoginDate: string;
+  totalSpent: number;
+  lootCounts: Record<Rarity, number>;
   // Actions
   setUsername: (name: string) => void;
   addGems: (amount: number) => void;
@@ -17,6 +19,8 @@ interface GameState {
   addBox: (boxId: string, count?: number) => void;
   removeBox: (boxId: string) => boolean;
   claimDailyBonus: () => boolean;
+  recordSpend: (usd: number) => void;
+  recordLoot: (rarity: Rarity) => void;
   reset: () => void;
 }
 
@@ -26,6 +30,8 @@ const INITIAL_STATE = {
   energy: 0,
   inventory: [] as InventoryEntry[],
   lastLoginDate: '',
+  totalSpent: 0,
+  lootCounts: { common: 0, uncommon: 0, rare: 0, epic: 0, legendary: 0 } as Record<Rarity, number>,
 };
 
 export const useGameStore = create<GameState>()(
@@ -76,6 +82,12 @@ export const useGameStore = create<GameState>()(
         }));
         return true;
       },
+
+      recordSpend: (usd) => set((s) => ({ totalSpent: s.totalSpent + usd })),
+
+      recordLoot: (rarity) => set((s) => ({
+        lootCounts: { ...s.lootCounts, [rarity]: s.lootCounts[rarity] + 1 },
+      })),
 
       claimDailyBonus: () => {
         const today = new Date().toISOString().slice(0, 10);
