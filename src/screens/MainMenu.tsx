@@ -10,7 +10,7 @@ export default function MainMenu() {
       <h1 className="text-5xl font-bold mb-1">
         <span className="text-purple-300">Empty</span><span className="text-yellow-300">Full</span>
       </h1>
-      <p className="text-purple-500 mb-6 text-sm">Main Menu</p>
+      <p className="text-purple-500 mb-6 text-sm">a free experience</p>
       <Link to="/open-boxes" className="w-full max-w-xs text-center px-6 py-3 bg-purple-700 hover:bg-purple-600 text-white rounded-lg font-semibold transition-colors">
         Open Boxes ({totalBoxes})
       </Link>

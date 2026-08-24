@@ -5,7 +5,8 @@ export type CurrencyType = 'gems' | 'energy';
 export interface Item {
   id: string;
   name: string;
-  image: string;
+  image?: string;
+  emoji?: string;
   rarity: Rarity;
   effect?: string;
   flavorText?: string;
@@ -22,7 +23,8 @@ export interface RarityDistribution {
 export interface Box {
   id: string;
   name: string;
-  image: string;
+  image?: string;
+  emoji?: string;
   currency: CurrencyType;
   price: number;
   rarityDistribution: RarityDistribution;
