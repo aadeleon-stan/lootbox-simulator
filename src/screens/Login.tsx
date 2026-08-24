@@ -21,7 +21,7 @@ export default function Login() {
       <h1 className="text-5xl font-bold mb-2">
         <span className="text-purple-300">Empty</span><span className="text-yellow-300">Full</span>
       </h1>
-      <p className="text-purple-500 mb-8 text-sm">The lootbox experience.</p>
+      <p className="text-purple-500 mb-8 text-sm">a free lootbox experience</p>
       <input
         className="w-full max-w-xs bg-gray-900 border border-purple-800 rounded-lg px-4 py-3 mb-4 text-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
         type="text"
