@@ -15,7 +15,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100svh-52px)] p-4">
+    <div className="flex flex-col items-center justify-center min-h-svh p-4">
       <h1 className="text-5xl font-bold mb-2">
         <span className="text-purple-300">Empty</span><span className="text-yellow-300">Full</span>
       </h1>

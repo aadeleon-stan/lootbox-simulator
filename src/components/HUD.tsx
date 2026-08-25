@@ -1,11 +1,13 @@
+import { useLocation } from 'react-router-dom';
 import { useGameStore } from '../store/gameStore';
 
 export default function HUD() {
   const username = useGameStore((s) => s.username);
   const gems = useGameStore((s) => s.gems);
   const energy = useGameStore((s) => s.energy);
+  const { pathname } = useLocation();
 
-  if (!username) return null;
+  if (!username || pathname === '/login') return null;
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-3 bg-purple-950/80 backdrop-blur-sm border-b border-purple-800">
