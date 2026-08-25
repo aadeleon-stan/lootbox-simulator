@@ -19,7 +19,10 @@ export default function OpenBoxes() {
     if (!selectedBoxId) return;
     const success = removeBox(selectedBoxId);
     if (success) {
-      navigate('/loot-roll', { state: { boxId: selectedBoxId } });
+      const b = boxes.find((x) => x.id === selectedBoxId);
+      navigate('/loot-roll', {
+        state: { boxId: selectedBoxId, boxEmoji: b?.emoji, boxName: b?.name },
+      });
     }
   };
 

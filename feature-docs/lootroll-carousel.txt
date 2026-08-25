@@ -1,0 +1,144 @@
+LOOT ROLL CAROUSEL — BRIEF
+===================================
+Let’s improve the loot roll experience. Right now it just feels like flashing lights, which feels cheap rather than exciting.
+
+Consider the Counter Strike: Global Offensive crate opening experience as a canonical example. It feels high-fidelity and tactile; I can see and process the individual items and their rarity as they pass over the “flapper” during the carousel spin; and moving from selecting a box to opening it feels like a single cohesive experience instead of an abrupt page change.
+
+Let’s try to incorporate these elements into our loot roll mechanic.
+
+===================================
+LOOT ROLL CAROUSEL — FEATURE PLAN
+===================================
+
+INSPIRATION
+-----------
+CS:GO crate opening: a horizontal strip of items scrolls past a center marker,
+decelerating until the winner lands under the "flapper." The player can see and
+process each item and its rarity as it flies by. The transition from box
+selection to unboxing feels like one cohesive moment, not a page jump.
+
+
+PROBLEMS WITH THE CURRENT IMPLEMENTATION
+-----------------------------------------
+1. Single-item flash: only one item is visible at a time, swapped in/out via
+   index — it reads as flashing lights rather than a scrolling strip.
+2. Abrupt page transition: navigating from /open-boxes to /loot-roll is a hard
+   route change with no visual continuity to the box the player just opened.
+3. Rarity reveal is a flat color wash: the full-screen background flash doesn't
+   feel tactile or connected to the item.
+4. Item pool is tiny (5 items): the carousel currently cycles through all items
+   sequentially, making the roll feel predictable.
+
+
+PLANNED CHANGES
+----------------
+
+### 1. Horizontal scrolling strip (core carousel rework)
+
+Replace the single-item swap with a CSS-translated horizontal strip.
+
+- Generate a "reel" of ~40–60 randomised items (dupes allowed), seeded from the
+  box's rarity distribution so the visible mix looks plausible.
+- Place the rolled winner at a fixed position near the end (e.g. index 45 of 50)
+  so the strip always resolves to it.
+- Render the full strip as a flex row, each cell showing emoji + rarity-colored
+  border/background tint.
+- Animate with CSS `transform: translateX(...)` and a cubic-bezier ease-out so
+  it starts fast and decelerates smoothly, settling with the winner centered
+  under a fixed "flapper" indicator (▼ triangle or thin vertical line).
+- The flapper sits at the horizontal center of the viewport; the strip slides
+  underneath it.
+
+Visual layout (ASCII):
+
+    ┌────────────────────────────────────────────┐
+    │          ▼  (flapper / center marker)       │
+    │  ┌────┐┌────┐┌════┐┌────┐┌────┐┌────┐      │
+    │  │ 🍏 ││ 👢 ││ 📯 ││ 🍏 ││ 🗡️ ││ 👢 │ ←strip│
+    │  └────┘└────┘└════┘└────┘└────┘└────┘      │
+    │          ↑ winner lands here                │
+    └────────────────────────────────────────────┘
+
+Each cell:
+  - ~80×80px, rounded corners
+  - Rarity-tinted background (current rarityColors at low opacity)
+  - Emoji centered, ~40px
+  - Thin left/right border in full rarity color
+
+### 2. Cohesive box-opening transition
+
+Instead of a hard navigate(), animate the transition:
+
+- When the HoldButton completes on OpenBoxes, expand the selected box card to
+  fill the screen (scale + fade), then morph into the carousel viewport.
+- Implementation approach: keep it simple — use React state to show an
+  "opening" overlay on the OpenBoxes page itself, run the carousel inside that
+  overlay, and only navigate to /loot-roll at the very end (result phase), OR
+  run the entire unboxing inline without a route change.
+- Simpler alternative: add a brief "box opening" intro phase at the start of
+  LootRoll — show the box emoji large + a "cracking open" animation
+  (scale pulse + particle burst) for ~1s before the carousel begins. This
+  avoids cross-route animation complexity.
+
+Recommend: start with the simpler alternative (intro phase on LootRoll).
+
+### 3. Rarity reveal rework
+
+After the strip settles:
+
+- Zoom the winner cell up to ~2× and float it to center-screen.
+- Flash a rarity-colored glow/ring around the cell (box-shadow pulse animation)
+  instead of painting the entire background.
+- Show the rarity badge pill below the item, then the item name, staggered with
+  short delays (200ms each).
+- For epic/legendary: add a screen-shake CSS animation + a radial burst of
+  small colored particles (absolute-positioned divs with random translate
+  animations).
+
+### 4. Bulk up the item pool (prerequisite / data task)
+
+The carousel looks best with variety. Expand `src/data/items.ts`:
+
+- Target: ~5–8 items per rarity tier (25–40 total).
+- Each item: id, name, rarity, emoji.  flavorText optional.
+- This is a data-entry task; no logic changes needed beyond what's already in
+  rollItem.ts (filters by rarity, picks randomly).
+
+### 5. Anticipation delay (optional enhancement, per MEMORY.md)
+
+Before the carousel starts, show a brief "mystery" beat:
+
+- Display a large spinning ❓ or the box emoji shaking for 0.5–1s.
+- Builds suspense and signals "something is happening" before the reel appears.
+
+
+IMPLEMENTATION ORDER
+---------------------
+1. Bulk up item pool (data task — unblocks realistic carousel visuals)
+2. Horizontal scrolling strip (core carousel rework in LootRoll.tsx)
+3. Rarity reveal rework (within LootRoll.tsx, after carousel settles)
+4. Box-opening intro phase (new "intro" phase at start of LootRoll)
+5. Polish: anticipation delay, screen-shake for epics, particle bursts
+
+
+FILES AFFECTED
+--------------
+- src/data/items.ts             — expand item list
+- src/screens/LootRoll.tsx      — full rewrite of carousel + reveal phases
+- src/lib/rollItem.ts           — no changes expected (already generic)
+- src/screens/OpenBoxes.tsx      — minor: possibly pass box emoji/color in state
+- (new) src/lib/generateReel.ts — helper to build randomised item strip
+- src/types/index.ts            — no changes expected
+
+
+OPEN QUESTIONS
+--------------
+- Should the carousel strip show item names, or just emojis? (emojis-only is
+  cleaner at speed; names could appear on hover/tap in result phase)
+- Sound effects: click-click-click as items pass the flapper? (deferred per
+  MEMORY.md — sound is a separate feature)
+- Should the reel generation use the actual rarity distribution weights, or a
+  flattened distribution so rarer items appear more often in the visual strip
+  for excitement? (Recommend: slightly flattened — show more rares/epics than
+  true odds so the strip looks exciting, but the actual winner is still rolled
+  with real weights via rollItem.)
