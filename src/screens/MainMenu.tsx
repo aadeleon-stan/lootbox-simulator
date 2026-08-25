@@ -72,7 +72,7 @@ export default function MainMenu() {
       `}</style>
 
       {/* Logout confirm modal */}
-      <Modal open={showConfirm} className="!max-w-sm text-center">
+      <Modal open={showConfirm} className="!max-w-xs text-center">
         <h3 className="text-xl font-bold text-white mb-2">Log out?</h3>
         <p className="text-gray-400 text-sm mb-6">Your session summary will be shown before you go.</p>
         <div className="flex flex-col gap-3">
