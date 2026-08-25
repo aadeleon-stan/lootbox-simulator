@@ -4,6 +4,7 @@ import { currencyPacks } from '../data/currencyPacks';
 import { useGameStore } from '../store/gameStore';
 import HoldButton from '../components/HoldButton';
 import Modal from '../components/Modal';
+import PageShell from '../components/PageShell';
 
 export default function Payment() {
   const { state } = useLocation();
@@ -20,10 +21,12 @@ export default function Payment() {
 
   if (!pack) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[calc(100svh-52px)] p-4 gap-4">
-        <p className="text-gray-500">No pack selected.</p>
-        <button className="px-4 py-2 border border-gray-400 rounded-lg" onClick={() => navigate(-1)}>Go Back</button>
-      </div>
+      <PageShell mode="centered">
+        <div className="flex flex-col items-center gap-4">
+          <p className="text-gray-500">No pack selected.</p>
+          <button className="px-4 py-2 border border-white/10 rounded-lg text-gray-400" onClick={() => navigate(-1)}>Go Back</button>
+        </div>
+      </PageShell>
     );
   }
 
@@ -40,10 +43,8 @@ export default function Payment() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-[calc(100svh-52px)] p-4 pt-8">
-      <div className="w-full max-w-sm flex flex-col gap-6">
-
-        <h2 className="text-2xl font-bold text-white">Checkout</h2>
+    <PageShell mode="flow" title="Checkout" noPanel>
+      <div className="flex flex-col gap-6">
 
         {/* Order summary */}
         <div>
@@ -202,6 +203,6 @@ export default function Payment() {
           Back to Menu
         </button>
       </Modal>
-    </div>
+    </PageShell>
   );
 }

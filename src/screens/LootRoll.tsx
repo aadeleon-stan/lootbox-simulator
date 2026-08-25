@@ -242,8 +242,8 @@ export default function LootRoll() {
           }}
         >
           {/* Fade masks */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 z-10 bg-gradient-to-r from-white to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 z-10 bg-gradient-to-l from-white to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 z-10 bg-gradient-to-r from-[#0f0a1e] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 z-10 bg-gradient-to-l from-[#0f0a1e] to-transparent" />
 
           <div
             ref={stripRef}
@@ -342,7 +342,7 @@ export default function LootRoll() {
           pointerEvents: showResultInfo ? 'auto' : 'none',
         }}
       >
-        <div className="flex items-center gap-2 bg-yellow-50 border border-yellow-300 text-yellow-700 font-bold px-4 py-2 rounded-full">
+        <div className="flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 font-bold px-4 py-2 rounded-full">
           +15 💎 bonus gems
         </div>
 

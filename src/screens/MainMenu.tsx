@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGameStore } from '../store/gameStore';
 import Modal from '../components/Modal';
+import PageShell from '../components/PageShell';
 import type { Rarity } from '../types';
 
 const RARITY_ORDER: Rarity[] = ['common', 'uncommon', 'rare', 'epic', 'legendary'];
@@ -31,25 +32,26 @@ export default function MainMenu() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100svh-52px)] p-4 gap-4">
+    <PageShell mode="centered">
+      <div className="flex flex-col items-center gap-4">
       <h1 className="text-5xl font-bold mb-1">
         <span className="text-purple-300">Empty</span><span className="text-yellow-300">Full</span>
       </h1>
       <p className="text-purple-500 mb-6 text-sm">a free experience</p>
-      <Link to="/open-boxes" className="w-full max-w-xs text-center px-6 py-3 bg-purple-700 hover:bg-purple-600 text-white rounded-lg font-semibold transition-colors">
+      <Link to="/open-boxes" className="w-full text-center px-6 py-3 bg-purple-700 hover:bg-purple-600 text-white rounded-lg font-semibold transition-colors">
         Open Boxes ({totalBoxes})
       </Link>
-      <Link to="/buy-boxes" className="w-full max-w-xs text-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-semibold transition-colors">
+      <Link to="/buy-boxes" className="w-full text-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-semibold transition-colors">
         Buy Boxes
       </Link>
-      <Link to="/buy-gems" className="w-full max-w-xs text-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-semibold transition-colors">
+      <Link to="/buy-gems" className="w-full text-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-semibold transition-colors">
         Buy Gems & Energy
       </Link>
-      <Link to="/compendium" className="w-full max-w-xs text-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-semibold transition-colors">
+      <Link to="/compendium" className="w-full text-center px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-semibold transition-colors">
         View Compendium
       </Link>
       <button
-        className="w-full max-w-xs px-6 py-3 border border-gray-700 rounded-lg text-gray-500 hover:text-gray-300 hover:border-gray-500 transition-colors mt-2"
+        className="w-full px-6 py-3 border border-gray-700 rounded-lg text-gray-500 hover:text-gray-300 hover:border-gray-500 transition-colors mt-2"
         onClick={() => setShowConfirm(true)}
       >
         Log Out
@@ -205,5 +207,6 @@ export default function MainMenu() {
         </button>
       </Modal>
     </div>
+    </PageShell>
   );
 }

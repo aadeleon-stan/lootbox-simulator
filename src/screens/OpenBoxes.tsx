@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { boxes } from '../data/boxes';
 import { useGameStore } from '../store/gameStore';
 import HoldButton from '../components/HoldButton';
+import PageShell from '../components/PageShell';
+import BottomNav from '../components/BottomNav';
+import { Link } from 'react-router-dom';
 
 export default function OpenBoxes() {
   const inventory = useGameStore((s) => s.inventory);
@@ -29,12 +32,9 @@ export default function OpenBoxes() {
   const selectedBox = boxes.find((b) => b.id === selectedBoxId);
 
   return (
-    <div className="flex flex-col min-h-[calc(100svh-52px)] p-4">
-      <div className="mx-auto w-full max-w-80 flex flex-col flex-1">
-      <h2 className="text-2xl font-bold mb-4">Open Boxes</h2>
-
+    <PageShell mode="flow" title="Open Boxes">
       {ownedBoxes.length === 0 ? (
-        <div className="flex-1 flex flex-col items-center justify-center gap-3">
+        <div className="flex flex-col items-center justify-center gap-3 py-12">
           <p className="text-gray-500">Your box inventory is empty.</p>
           <Link to="/buy-boxes" className="px-4 py-2 bg-purple-600 text-white rounded-lg">Buy Boxes</Link>
         </div>
@@ -47,14 +47,14 @@ export default function OpenBoxes() {
                 className={[
                   'flex flex-col items-center gap-2 p-4 border-2 rounded-xl transition-colors',
                   selectedBoxId === box.id
-                    ? 'border-purple-500 bg-purple-50'
-                    : 'border-gray-200 hover:border-purple-300',
+                    ? 'border-purple-500 bg-purple-500/10'
+                    : 'border-white/10 hover:border-purple-300',
                 ].join(' ')}
                 onClick={() => setSelectedBoxId(box.id)}
               >
                 <span className="text-4xl">{box.emoji}</span>
                 <span className="font-semibold text-sm">{box.name}</span>
-                <span className="bg-purple-100 text-purple-700 text-xs font-bold px-2 py-0.5 rounded-full">
+                <span className="bg-purple-500/15 text-purple-400 text-xs font-bold px-2 py-0.5 rounded-full">
                   x{entry.count}
                 </span>
               </button>
@@ -72,11 +72,7 @@ export default function OpenBoxes() {
         </>
       )}
 
-      <div className="mt-auto flex gap-3">
-        <Link to="/main-menu" className="px-4 py-2 border border-gray-400 rounded-lg">Back</Link>
-        <Link to="/buy-boxes" className="px-4 py-2 bg-purple-600 text-white rounded-lg">Buy Boxes</Link>
-      </div>
-      </div>
-    </div>
+      <BottomNav back="/main-menu" links={[{ to: '/buy-boxes', label: 'Buy Boxes' }]} />
+    </PageShell>
   );
 }
