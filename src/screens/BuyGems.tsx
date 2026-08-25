@@ -25,7 +25,7 @@ export default function BuyGems() {
         ))}
       </div>
 
-      <BottomNav back="/main-menu" />
+      <BottomNav back="/main-menu" links={[{ to: '/buy-boxes', label: 'Buy Boxes' }]} />
     </PageShell>
   );
 }
