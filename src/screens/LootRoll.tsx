@@ -88,7 +88,10 @@ export default function LootRoll() {
 
     const containerWidth = containerRef.current.offsetWidth;
     const centerOffset = containerWidth / 2 - CELL_SIZE / 2;
-    const targetX = WINNER_INDEX * CELL_STEP - centerOffset;
+    // Random offset within ±40% of cell width so the flapper doesn't always
+    // land dead-center on the winner — feels more organic and less "rigged"
+    const jitter = (Math.random() - 0.5) * CELL_SIZE * 0.8;
+    const targetX = WINNER_INDEX * CELL_STEP - centerOffset + jitter;
 
     let startTime: number | null = null;
     let rafId: number;
