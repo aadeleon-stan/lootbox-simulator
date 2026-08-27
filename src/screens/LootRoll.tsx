@@ -12,7 +12,7 @@ type Phase = 'intro' | 'carousel' | 'reveal';
 const CELL_SIZE = 112;
 const CELL_GAP = 10;
 const CELL_STEP = CELL_SIZE + CELL_GAP;
-const SPIN_DURATION = 10000;
+const SPIN_DURATION = 9000;
 
 const rarityColors: Record<Rarity, string> = {
   common:    '#6b7280',
@@ -46,6 +46,7 @@ export default function LootRoll() {
   const { state } = useLocation();
   const addGems = useGameStore((s) => s.addGems);
   const recordLoot = useGameStore((s) => s.recordLoot);
+  const currentGems = useGameStore((s) => s.gems);
 
   const box = boxes.find((b) => b.id === state?.boxId);
   const rolledItem = useRef<Item>(box ? rollItem(box, items) : items[0]);
@@ -60,6 +61,11 @@ export default function LootRoll() {
   const stripRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const gemsAdded = useRef(false);
+
+  // Gem counter animation
+  const gemsBeforeBonus = useRef(currentGems);
+  const [displayGems, setDisplayGems] = useState<number | null>(null);
+  const [gemPop, setGemPop] = useState(false);
 
   // Reveal sub-states (staggered)
   const [showGlow, setShowGlow] = useState(false);
@@ -166,12 +172,34 @@ export default function LootRoll() {
     };
   }, [phase]);
 
-  // --- Add gems once when result info appears ---
+  // --- Add gems once when result info appears, then animate counter ---
   useEffect(() => {
     if (!showResultInfo || gemsAdded.current) return;
     gemsAdded.current = true;
+    const startVal = gemsBeforeBonus.current;
     addGems(15);
     recordLoot(rolledItem.current.rarity);
+
+    // Animate count-up from old balance to new balance
+    const endVal = startVal + 15;
+    setDisplayGems(startVal);
+
+    const steps = 15;
+    const stepDuration = 50; // 750ms total
+    let step = 0;
+    const interval = setInterval(() => {
+      step++;
+      const val = Math.round(startVal + (endVal - startVal) * (step / steps));
+      setDisplayGems(val);
+      if (step >= steps) {
+        clearInterval(interval);
+        // Pop scale on final value
+        setGemPop(true);
+        setTimeout(() => setGemPop(false), 300);
+      }
+    }, stepDuration);
+
+    return () => clearInterval(interval);
   }, [showResultInfo, addGems, recordLoot]);
 
   if (!box) {
@@ -345,8 +373,17 @@ export default function LootRoll() {
           pointerEvents: showResultInfo ? 'auto' : 'none',
         }}
       >
-        <div className="flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 font-bold px-4 py-2 rounded-full">
-          +15 💎 bonus gems
+        <div className="flex flex-col items-center gap-2">
+          <div
+            className="flex items-center gap-2 text-yellow-400 font-bold text-2xl transition-transform duration-300"
+            style={{ transform: gemPop ? 'scale(1.25)' : 'scale(1)' }}
+          >
+            <span>💎</span>
+            <span className="tabular-nums">{displayGems ?? gemsBeforeBonus.current}</span>
+          </div>
+          <div className="flex items-center gap-2 bg-green-400/10 border border-green-400/30 text-green-400 font-bold px-4 py-1.5 rounded-full text-sm animate-[fadeInUp_0.3s_ease-out]">
+            +15 bonus gems
+          </div>
         </div>
 
         <Link
