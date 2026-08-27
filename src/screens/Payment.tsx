@@ -198,9 +198,9 @@ export default function Payment() {
         </div>
         <button
           className="mt-4 w-full py-2 rounded-lg bg-purple-600 text-white font-semibold"
-          onClick={() => navigate('/main-menu')}
+          onClick={() => navigate('/buy-gems')}
         >
-          Back to Menu
+          Close
         </button>
       </Modal>
     </PageShell>
